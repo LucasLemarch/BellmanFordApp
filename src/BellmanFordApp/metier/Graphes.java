@@ -8,23 +8,38 @@ import org.graphstream.algorithm.Toolkit;
 
 public class Graphes
 {
-	public static SingleGraph genererGraphe( int nbSommet, int nbArete )
+	private SingleGraph graphe;
+
+	public Graphes()
 	{
-		SingleGraph graph = new SingleGraph("Graphe Aléatoire");
+		this.genererGrapheAlea(4, 5);
+		this.algorithmeBellmanFord(0);
+	}
+
+	public SingleGraph getGraphe() { return this.graphe; }
+
+	public void ajouterNoeud()
+	{
+		this.graphe.addNode("test");
+	}
+
+	public void genererGrapheAlea(int nbSommet, int nbArete)
+	{
+		this.graphe = new SingleGraph("Graphe Aléatoire");
 
 		for(int i = 0 ; i < nbSommet ; i++)
-			graph.addNode(""+i);
+			this.graphe.addNode(""+i);
 
 		for(int i = 0 ; i < nbArete ; i++)
 		{
 			Node noeud1, noeud2;
 
 			do{
-				noeud1 = Toolkit.randomNode(graph);
-				noeud2 = Toolkit.randomNode(graph);
+				noeud1 = Toolkit.randomNode(this.graphe);
+				noeud2 = Toolkit.randomNode(this.graphe);
 			} while(noeud1.hasEdgeBetween(noeud2) || noeud2.hasEdgeBetween(noeud1) || noeud1 == noeud2);
 
-			Edge e = graph.addEdge("(" + noeud1.getId() + "," + noeud2.getId() + ")",
+			Edge e = this.graphe.addEdge("(" + noeud1.getId() + "," + noeud2.getId() + ")",
 			              noeud1.getId(), noeud2.getId(), true);
 			
 			int val = (int)(Math.random() * 5) +1;
@@ -32,31 +47,29 @@ public class Graphes
 			e.setAttribute("valeur", val);
 		}
 
-		for(Node n:graph.getNodeSet()) 
+		for(Node n:this.graphe.getNodeSet()) 
 		{
 			n.setAttribute("ui.style","fill-color:red;");
 			n.setAttribute("label",""+n.getId());
 		}
-
-		return graph;
 	}
 
-	public static void algorithmeBellmanFord(SingleGraph graph, int idNoeudDebut)
+	public void algorithmeBellmanFord(int idNoeudDebut)
 	{
-		for(Node n:graph.getNodeSet()) 
+		for(Node n:this.graphe.getNodeSet()) 
 		{
 			n.removeAttribute("pere"); // enleve le pere si il existe
 			n.setAttribute("poids", Integer.MAX_VALUE); // donne un poids "infini" aux noeuds
 		}
 
-		graph.getNode(idNoeudDebut).setAttribute("poids", 0); // poid de 0 au noeud de depart
+		this.graphe.getNode(idNoeudDebut).setAttribute("poids", 0); // poid de 0 au noeud de depart
 
-		for (int i = 1; i <= graph.getNodeCount()-1; i++)
+		for (int i = 1; i <= this.graphe.getNodeCount()-1; i++)
 		{
 			// debug
 			System.out.println("    TOUR " + i);
 
-			for(Node n:graph.getNodeSet()) 
+			for(Node n:this.graphe.getNodeSet()) 
 			{
 				if (n.hasAttribute("poids") && (int) (n.getAttribute("poids")) != Integer.MAX_VALUE)
 				{
@@ -77,18 +90,10 @@ public class Graphes
 			}
 
 			// debug
-			for (Node n : graph.getNodeSet())
+			for (Node n : this.graphe.getNodeSet())
 			{
 				System.out.println("" + n.getId() + "    poids : " + n.getAttribute("poids") + "    pere : " + n.getAttribute("pere"));
 			}
 		}
 	}
-
-	public static void main(String args[])
-	{
-		SingleGraph graph = Graphes.genererGraphe(4, 5);
-		graph.display();
-		
-		Graphes.algorithmeBellmanFord(graph, 0);
-	}	
 }
