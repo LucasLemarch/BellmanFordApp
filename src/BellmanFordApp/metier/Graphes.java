@@ -13,10 +13,10 @@ public class Graphes
 	public Graphes()
 	{
 		this.genererGrapheAlea(4, 5);
-		this.algorithmeBellmanFord(0);
 	}
 
 	public SingleGraph getGraphe() { return this.graphe; }
+	public int getNbNoeuds() {return this.graphe.getNodeCount(); }
 
 	public void ajouterNoeud()
 	{
@@ -54,7 +54,7 @@ public class Graphes
 		}
 	}
 
-	public void algorithmeBellmanFord(int idNoeudDebut)
+	public void algorithmeBellmanFord(int idNoeudDepart, int idNoeudArrive)
 	{
 		for(Node n:this.graphe.getNodeSet()) 
 		{
@@ -62,13 +62,10 @@ public class Graphes
 			n.setAttribute("poids", Integer.MAX_VALUE); // donne un poids "infini" aux noeuds
 		}
 
-		this.graphe.getNode(idNoeudDebut).setAttribute("poids", 0); // poid de 0 au noeud de depart
+		this.graphe.getNode(idNoeudDepart).setAttribute("poids", 0); // poid de 0 au noeud de depart
 
 		for (int i = 1; i <= this.graphe.getNodeCount()-1; i++)
 		{
-			// debug
-			System.out.println("    TOUR " + i);
-
 			for(Node n:this.graphe.getNodeSet()) 
 			{
 				if (n.hasAttribute("poids") && (int) (n.getAttribute("poids")) != Integer.MAX_VALUE)
@@ -86,13 +83,31 @@ public class Graphes
 						}
 					}
 				}
-				
 			}
+		}
 
-			// debug
-			for (Node n : this.graphe.getNodeSet())
+		this.afficherChemin(idNoeudDepart, idNoeudArrive);
+	}
+
+	private void afficherChemin(int idNoeudDepart, int idNoeudArrive)
+	{
+		// Remettre toutes les aretes de la meme couleur
+		for (Edge e : this.graphe.getEachEdge())
+			e.setAttribute("ui.style","fill-color:black;");
+
+		// Afficher le chemin le plus rapide
+		Node n = this.graphe.getNode(idNoeudArrive);
+
+		while (Integer.parseInt(n.getId()) != idNoeudDepart && (int) n.getAttribute("poids") != Integer.MAX_VALUE)
+		{
+			for (Edge e : n.getEachEnteringEdge())
 			{
-				System.out.println("" + n.getId() + "    poids : " + n.getAttribute("poids") + "    pere : " + n.getAttribute("pere"));
+				if (e.getSourceNode().getId() == n.getAttribute("pere"))
+				{
+					e.setAttribute("ui.style","fill-color:green;");
+					n = e.getSourceNode();
+					break;                                                                    
+				}
 			}
 		}
 	}

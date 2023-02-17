@@ -13,6 +13,7 @@ public class FrameGraphe extends JFrame
 	private Controleur ctrl;
 
 	private PanelGraphe panelGraphe;
+	private PanelBellmanFord panelBellmanFord;
 	private PanelGeneration panelGeneration;
 
 	public FrameGraphe(Controleur ctrl)
@@ -26,14 +27,15 @@ public class FrameGraphe extends JFrame
 		JPanel panelOption = new JPanel(new GridLayout(3, 1));
 
 		this.panelGraphe = new PanelGraphe(ctrl);
+		this.panelBellmanFord = new PanelBellmanFord(ctrl);
 		this.panelGeneration = new PanelGeneration(ctrl);
 
 		// Positionnement des composants
 		this.add(this.panelGraphe, BorderLayout.CENTER);
 		this.add(panelOption, BorderLayout.EAST);
 
+		panelOption.add(this.panelBellmanFord);
 		panelOption.add(this.panelGeneration);
-		panelOption.add(new JPanel());
 		panelOption.add(new JPanel());
 
 		this.setVisible(true);
@@ -41,6 +43,7 @@ public class FrameGraphe extends JFrame
 
 	public void rechargerGraphe()
 	{
+		//maj panelGraphe
 		this.remove(this.panelGraphe);
 
 		this.panelGraphe = new PanelGraphe(ctrl);
@@ -48,5 +51,8 @@ public class FrameGraphe extends JFrame
 
 		this.revalidate();
 		this.repaint();
+
+		//maj panelBellmanFord
+		this.panelBellmanFord.ajusterListes();
 	}
 }

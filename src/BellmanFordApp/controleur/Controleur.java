@@ -26,6 +26,15 @@ public class Controleur
 	{
 		return this.graphes.getGraphe();
 	}
+	public int getNbNoeuds()
+	{
+		return this.graphes.getNbNoeuds();
+	}
+
+	public void algorithmeBellmanFord(int idNoeudDepart, int idNoeudArrive)
+	{
+		this.graphes.algorithmeBellmanFord(idNoeudDepart, idNoeudArrive);
+	}
 
 	public static void main(String[] args)
 	{

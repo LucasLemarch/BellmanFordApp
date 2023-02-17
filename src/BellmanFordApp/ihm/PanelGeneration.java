@@ -25,7 +25,6 @@ public class PanelGeneration extends JPanel implements ActionListener
 		this.ctrl = ctrl;
 
 		this.setLayout(new BorderLayout());
-		this.setBackground(Color.BLUE);
 
 		// Création des composants
 		JPanel panelTxt = new JPanel();
@@ -55,20 +54,78 @@ public class PanelGeneration extends JPanel implements ActionListener
 	{
 		if (e.getSource() == this.txtSommet)
 		{
-			// vérifier valeur
+			try {
+				int nbSommet = Integer.parseInt(this.txtSommet.getText());
+
+				if (nbSommet < 2)
+				{
+					// afficher erreur
+					this.txtSommet.setText("2");
+				}
+			}
+			catch( NumberFormatException ex )
+			{
+				// afficher erreur
+				this.txtSommet.setText("");
+			}
 		}
 
 		if (e.getSource() == this.txtArete)
 		{
-			// vérifier valeur
+			try {
+				int nbSommet = Integer.parseInt(this.txtSommet.getText());
+				int nbArete  = Integer.parseInt(this.txtArete .getText());
+				int nbAreteMax = nbSommet * (nbSommet - 1) / 2;
+
+				if (nbArete < 1)
+				{
+					// afficher erreur
+					this.txtArete.setText("1");
+				}
+
+				if (nbArete > nbAreteMax)
+				{
+					// afficher erreur
+					this.txtArete.setText("" + nbAreteMax);
+				}
+			}
+			catch( NumberFormatException ex )
+			{
+				// afficher erreur
+				this.txtArete.setText("");
+			}
 		}
 
 		if (e.getSource() == this.btnGenerer)
 		{
-			int nbSommet = Integer.parseInt(this.txtSommet.getText());
-			int nbArete  = Integer.parseInt(this.txtArete .getText());
+			int nbSommet = 0;
+			int nbArete  = 0;
+			boolean erreur = false;
 
-			this.ctrl.genererGrapheAlea(nbSommet, nbArete);
+			try {
+				nbSommet = Integer.parseInt(this.txtSommet.getText());
+				this.txtSommet.setBackground(Color.WHITE);
+			}
+			catch( NumberFormatException ex )
+			{
+				// afficher erreur
+				this.txtSommet.setBackground(Color.RED);
+				erreur = true;
+			}
+
+			try {
+				nbArete  = Integer.parseInt(this.txtArete .getText());
+				this.txtSommet.setBackground(Color.WHITE);
+			}
+			catch( NumberFormatException ex )
+			{
+				// afficher erreur
+				this.txtArete.setBackground(Color.RED);
+				erreur = true;
+			}
+
+			if (!erreur)
+				this.ctrl.genererGrapheAlea(nbSommet, nbArete);
 		}
 		
 	}
