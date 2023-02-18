@@ -1,8 +1,8 @@
 package BellmanFordApp.ihm;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -41,6 +41,16 @@ public class PanelSectionEntier extends JPanel implements ActionListener
 		this.btnMoins.addActionListener(this);
 		this.btnPlus.addActionListener(this);
 		this.txtEntier.addActionListener(this);
+	}
+
+	public String getText()
+	{
+		return this.txtEntier.getText();
+	}
+
+	public void setColor(Color c)
+	{
+		this.txtEntier.setBackground(c);
 	}
 
 	public void actionPerformed(ActionEvent e) 

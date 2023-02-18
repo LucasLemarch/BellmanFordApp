@@ -10,7 +10,6 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import BellmanFordApp.controleur.Controleur;
 
@@ -59,44 +58,82 @@ public class PanelGeneration extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
 	{
-	/*
-	
-		int nbSommet = 0;
-		int nbArete  = 0;
+		int nbSommet = 0, nbArete = 0, pMin = 0, pMax = 0;
 		boolean erreur = false;
 
+		// Vérification de la valeur des sommets
 		try {
-			nbSommet = Integer.parseInt(this.txtSommet.getText());
-			this.txtSommet.setBackground(Color.WHITE);
-		}
-		catch( NumberFormatException ex )
-		{
-			// afficher erreur
-			this.txtSommet.setBackground(Color.RED);
-			erreur = true;
-		}
+			nbSommet = Integer.parseInt(this.panelSommet.getText());
 
-		try {
-			nbArete  = Integer.parseInt(this.txtArete .getText());
-			this.txtSommet.setBackground(Color.WHITE);
-		}
-		catch( NumberFormatException ex )
-		{
-			// afficher erreur
-			this.txtArete.setBackground(Color.RED);
-			erreur = true;
-		}
-
-		int nbAreteMax = nbSommet * (nbSommet - 1) / 2;
-		if (nbArete > nbAreteMax)
+			if (nbSommet < 2)
 			{
 				// afficher erreur
+				this.panelSommet.setColor(Color.RED);
 				erreur = true;
 			}
+			else
+				this.panelSommet.setColor(Color.WHITE);
+		}
+		catch( NumberFormatException ex )
+		{
+			// afficher erreur
+			this.panelSommet.setColor(Color.RED);
+			erreur = true;
+		}
 
+		// Vérification de la valeur des sommets
+		try {
+			nbArete = Integer.parseInt(this.panelArete.getText());
+			int nbAreteMax = nbSommet * (nbSommet - 1) / 2;
+
+			if (nbArete < 1)
+			{
+				// afficher erreur
+				this.panelArete.setColor(Color.RED);
+				erreur = true;
+			}
+			else if (nbArete > nbAreteMax)
+			{
+				// afficher erreur
+				this.panelArete.setColor(Color.RED);
+				erreur = true;
+			}
+			else
+				this.panelArete.setColor(Color.WHITE);
+		}
+		catch( NumberFormatException ex )
+		{
+			// afficher erreur
+			this.panelArete.setColor(Color.RED);
+			erreur = true;
+		}
+
+		// Vérification de la valeur minimum du poids
+		try {
+			pMin = Integer.parseInt(this.panelMin.getText());
+			this.panelMin.setColor(Color.WHITE);
+		}
+		catch( NumberFormatException ex )
+		{
+			// afficher erreur
+			this.panelMin.setColor(Color.RED);
+			erreur = true;
+		}
+
+		// Vérification de la valeur maximum du poids
+		try {
+			pMax = Integer.parseInt(this.panelMax.getText());
+			this.panelMax.setColor(Color.WHITE);
+		}
+		catch( NumberFormatException ex )
+		{
+			// afficher erreur
+			this.panelMax.setColor(Color.RED);
+			erreur = true;
+		}
+
+		// Si aucune erreur on genere le graphe aleatoire
 		if (!erreur)
-			this.ctrl.genererGrapheAlea(nbSommet, nbArete);
-	
-		*/
+			this.ctrl.genererGrapheAlea(nbSommet, nbArete, pMin, pMax);
 	}
 }
