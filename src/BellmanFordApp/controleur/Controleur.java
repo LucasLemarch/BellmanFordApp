@@ -16,9 +16,9 @@ public class Controleur
 		this.ihm = new FrameGraphe(this);
 	}
 
-	public void genererGrapheAlea(int nbSommet, int nbArete)
+	public void genererGrapheAlea(int nbSommet, int nbArete, int pMin, int pMax)
 	{
-		this.graphes.genererGrapheAlea(nbSommet, nbArete);
+		this.graphes.genererGrapheAlea(nbSommet, nbArete, pMin, pMax);
 		this.ihm.rechargerGraphe();
 	}
 

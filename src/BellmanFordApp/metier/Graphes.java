@@ -12,7 +12,7 @@ public class Graphes
 
 	public Graphes()
 	{
-		this.genererGrapheAlea(4, 5);
+		this.genererGrapheAlea(4, 5, -2, 10);
 	}
 
 	public SingleGraph getGraphe() { return this.graphe; }
@@ -23,7 +23,7 @@ public class Graphes
 		this.graphe.addNode("test");
 	}
 
-	public void genererGrapheAlea(int nbSommet, int nbArete)
+	public void genererGrapheAlea(int nbSommet, int nbArete, int pMin, int pMax)
 	{
 		this.graphe = new SingleGraph("Graphe Aléatoire");
 
@@ -42,7 +42,7 @@ public class Graphes
 			Edge e = this.graphe.addEdge("(" + noeud1.getId() + "," + noeud2.getId() + ")",
 			              noeud1.getId(), noeud2.getId(), true);
 			
-			int val = (int)(Math.random() * 5) +1;
+			int val = (int) (Math.random() * (pMax - pMin + 1) + pMin);
 			e.setAttribute("label","" + val);
 			e.setAttribute("valeur", val);
 		}

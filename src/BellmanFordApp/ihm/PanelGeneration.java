@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,9 +18,11 @@ public class PanelGeneration extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
 
-	private JTextField txtSommet;
-	private JTextField txtArete;
-	private JButton    btnGenerer;
+	private PanelSectionEntier panelSommet;
+	private PanelSectionEntier panelArete;
+	private PanelSectionEntier panelMin;
+	private PanelSectionEntier panelMax;
+	private JButton            btnGenerer;
 
 	public PanelGeneration(Controleur ctrl)
 	{
@@ -27,106 +31,72 @@ public class PanelGeneration extends JPanel implements ActionListener
 		this.setLayout(new BorderLayout());
 
 		// Création des composants
-		JPanel panelTxt = new JPanel();
-		this.txtSommet = new JTextField(5);
-		this.txtArete  = new JTextField(5);
-		this.btnGenerer = new JButton("Generer");
+		JPanel panelCentre = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		panelCentre.setPreferredSize(new Dimension(260, this.getHeight()));
+
+		this.panelSommet = new PanelSectionEntier(ctrl, "Nombre de sommets");
+		this.panelArete  = new PanelSectionEntier(ctrl, "Nombre d'aretes"  );
+		this.panelMin    = new PanelSectionEntier(ctrl, "Poids minimum"    );
+		this.panelMax    = new PanelSectionEntier(ctrl, "Poids maximum"    );
+		this.btnGenerer  = new JButton("Generer");
 
 
 		// Positionnement des composants
 		this.add(new JLabel("Generer un graphe aléatoire"), BorderLayout.NORTH);
 
-		this.add(panelTxt, BorderLayout.CENTER);
-		panelTxt.add(this.txtSommet);
-		panelTxt.add(this.txtArete );
-
-		this.add(this.btnGenerer, BorderLayout.SOUTH);
-		
+		this.add(panelCentre, BorderLayout.CENTER);
+		panelCentre.add(this.panelSommet);
+		panelCentre.add(this.panelArete );
+		panelCentre.add(this.panelMin   );
+		panelCentre.add(this.panelMax   );
+		panelCentre.add(this.btnGenerer );
+	
 
 		// Activation des composants
-		this.txtSommet.addActionListener(this);
-		this.txtArete.addActionListener(this);
 		this.btnGenerer.addActionListener(this);
 	}
 
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		if (e.getSource() == this.txtSommet)
-		{
-			try {
-				int nbSommet = Integer.parseInt(this.txtSommet.getText());
+	/*
+	
+		int nbSommet = 0;
+		int nbArete  = 0;
+		boolean erreur = false;
 
-				if (nbSommet < 2)
-				{
-					// afficher erreur
-					this.txtSommet.setText("2");
-				}
-			}
-			catch( NumberFormatException ex )
-			{
-				// afficher erreur
-				this.txtSommet.setText("");
-			}
+		try {
+			nbSommet = Integer.parseInt(this.txtSommet.getText());
+			this.txtSommet.setBackground(Color.WHITE);
+		}
+		catch( NumberFormatException ex )
+		{
+			// afficher erreur
+			this.txtSommet.setBackground(Color.RED);
+			erreur = true;
 		}
 
-		if (e.getSource() == this.txtArete)
+		try {
+			nbArete  = Integer.parseInt(this.txtArete .getText());
+			this.txtSommet.setBackground(Color.WHITE);
+		}
+		catch( NumberFormatException ex )
 		{
-			try {
-				int nbSommet = Integer.parseInt(this.txtSommet.getText());
-				int nbArete  = Integer.parseInt(this.txtArete .getText());
-				int nbAreteMax = nbSommet * (nbSommet - 1) / 2;
-
-				if (nbArete < 1)
-				{
-					// afficher erreur
-					this.txtArete.setText("1");
-				}
-
-				if (nbArete > nbAreteMax)
-				{
-					// afficher erreur
-					this.txtArete.setText("" + nbAreteMax);
-				}
-			}
-			catch( NumberFormatException ex )
-			{
-				// afficher erreur
-				this.txtArete.setText("");
-			}
+			// afficher erreur
+			this.txtArete.setBackground(Color.RED);
+			erreur = true;
 		}
 
-		if (e.getSource() == this.btnGenerer)
-		{
-			int nbSommet = 0;
-			int nbArete  = 0;
-			boolean erreur = false;
-
-			try {
-				nbSommet = Integer.parseInt(this.txtSommet.getText());
-				this.txtSommet.setBackground(Color.WHITE);
-			}
-			catch( NumberFormatException ex )
+		int nbAreteMax = nbSommet * (nbSommet - 1) / 2;
+		if (nbArete > nbAreteMax)
 			{
 				// afficher erreur
-				this.txtSommet.setBackground(Color.RED);
 				erreur = true;
 			}
 
-			try {
-				nbArete  = Integer.parseInt(this.txtArete .getText());
-				this.txtSommet.setBackground(Color.WHITE);
-			}
-			catch( NumberFormatException ex )
-			{
-				// afficher erreur
-				this.txtArete.setBackground(Color.RED);
-				erreur = true;
-			}
-
-			if (!erreur)
-				this.ctrl.genererGrapheAlea(nbSommet, nbArete);
-		}
-		
+		if (!erreur)
+			this.ctrl.genererGrapheAlea(nbSommet, nbArete);
+	
+		*/
 	}
 }
