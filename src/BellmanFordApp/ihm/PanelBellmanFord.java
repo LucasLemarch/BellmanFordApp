@@ -2,12 +2,16 @@ package BellmanFordApp.ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.FlowLayout;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import BellmanFordApp.controleur.Controleur;
 
@@ -17,6 +21,7 @@ public class PanelBellmanFord extends JPanel implements ActionListener
 
 	private JComboBox<String> cbDepart;
 	private JComboBox<String> cbArrive;
+	private JTextArea         taInfo;
 
 	public PanelBellmanFord(Controleur ctrl)
 	{
@@ -25,7 +30,8 @@ public class PanelBellmanFord extends JPanel implements ActionListener
 		this.setLayout(new BorderLayout());
 
 		// Création des composants
-		JPanel panelChoix = new JPanel();
+		JPanel panelChoix = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		panelChoix.setPreferredSize(new Dimension(260, this.getHeight()));
 		this.cbDepart = new JComboBox<String>();
 		this.cbArrive = new JComboBox<String>();
 
@@ -35,13 +41,22 @@ public class PanelBellmanFord extends JPanel implements ActionListener
 			this.cbArrive.addItem("Noeud " + i);
 		}
 
+		
+		this.taInfo = new JTextArea();
+		this.taInfo.setEditable(false);
+
+		JScrollPane panelScroll = new JScrollPane(this.taInfo);
+		panelScroll.setPreferredSize(new Dimension(200, 200));
+		
+
 
 		// Positionnement des composants
-		this.add(new JLabel("Algorithme de Bellman Ford"), BorderLayout.NORTH);
+		this.add(new JLabel("Algorithme de Bellman Ford", JLabel.CENTER), BorderLayout.NORTH);
 
 		this.add(panelChoix, BorderLayout.CENTER);
 		panelChoix.add(this.cbDepart);
 		panelChoix.add(this.cbArrive);
+		panelChoix.add(panelScroll);
 
 
 		// Activation des composants
@@ -72,5 +87,7 @@ public class PanelBellmanFord extends JPanel implements ActionListener
 	{
 		this.ctrl.algorithmeBellmanFord(this.cbDepart.getSelectedIndex(), 
 		                                this.cbArrive.getSelectedIndex());
+
+		this.taInfo.setText(this.ctrl.getInfoGraphe());
 	}
 }

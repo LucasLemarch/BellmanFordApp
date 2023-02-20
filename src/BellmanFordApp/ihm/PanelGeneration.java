@@ -41,7 +41,7 @@ public class PanelGeneration extends JPanel implements ActionListener
 
 
 		// Positionnement des composants
-		this.add(new JLabel("Generer un graphe aléatoire"), BorderLayout.NORTH);
+		this.add(new JLabel("Generer un graphe aléatoire", JLabel.CENTER), BorderLayout.NORTH);
 
 		this.add(panelCentre, BorderLayout.CENTER);
 		panelCentre.add(this.panelSommet);

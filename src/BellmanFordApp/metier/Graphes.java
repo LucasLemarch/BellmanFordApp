@@ -4,6 +4,9 @@ import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.Edge;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.graphstream.algorithm.Toolkit;
 
 public class Graphes
@@ -18,9 +21,51 @@ public class Graphes
 	public SingleGraph getGraphe() { return this.graphe; }
 	public int getNbNoeuds() {return this.graphe.getNodeCount(); }
 
+	public List<String> getLstArete()
+	{
+		ArrayList<String> lstArete = new ArrayList<String>();
+
+		for (Edge e : this.graphe.getEdgeSet())
+			lstArete.add(e.getId());
+		
+		return lstArete;
+	}
+
 	public void ajouterNoeud()
 	{
-		this.graphe.addNode("test");
+		Node n = this.graphe.addNode("" + this.graphe.getNodeCount());
+
+		n.setAttribute("ui.style","fill-color:red;");
+		n.setAttribute("label",""+n.getId());
+	}
+
+	public void supprimerNoeud()
+	{
+		this.graphe.removeNode(this.graphe.getNodeCount() - 1);
+	}
+
+	public boolean ajouterArete(String idNoeudDepart, String idNoeudArrive, int val)
+	{
+		Node noeud1 = this.graphe.getNode(idNoeudDepart);
+		Node noeud2 = this.graphe.getNode(idNoeudArrive);
+
+		if (noeud1.hasEdgeBetween(noeud2) || noeud2.hasEdgeBetween(noeud1) || noeud1 == noeud2)
+			return false;
+		else
+		{
+			Edge e = this.graphe.addEdge("(" + noeud1.getId() + "," + noeud2.getId() + ")",
+		                                 noeud1.getId(), noeud2.getId(), true);
+
+			e.setAttribute("label","" + val);
+			e.setAttribute("valeur", val);
+		}
+
+		return true;
+	}
+
+	public void supprimerArete(String id)
+	{
+		this.graphe.removeEdge(id);
 	}
 
 	public void genererGrapheAlea(int nbSommet, int nbArete, int pMin, int pMax)
@@ -110,5 +155,24 @@ public class Graphes
 				}
 			}
 		}
+	}
+
+	public String toString()
+	{
+		String sRet = "id   poids    pere\n";
+
+		for (Node n : this.graphe.getNodeSet())
+		{
+			sRet += String.format("%-5s", n.getId());
+
+			if ((int) n.getAttribute("poids") == Integer.MAX_VALUE)
+				sRet += "infini      ";
+			else
+				sRet += String.format("%-12d", (int) n.getAttribute("poids"));
+
+			sRet += n.getAttribute("pere") + "\n";
+		}
+
+		return sRet;
 	}
 }

@@ -1,5 +1,7 @@
 package BellmanFordApp.controleur;
 
+import java.util.List;
+
 import org.graphstream.graph.implementations.SingleGraph;
 
 import BellmanFordApp.ihm.FrameGraphe;
@@ -31,9 +33,39 @@ public class Controleur
 		return this.graphes.getNbNoeuds();
 	}
 
+	public List<String> getLstArete()
+	{
+		return this.graphes.getLstArete();
+	}
+
 	public void algorithmeBellmanFord(int idNoeudDepart, int idNoeudArrive)
 	{
 		this.graphes.algorithmeBellmanFord(idNoeudDepart, idNoeudArrive);
+	}
+
+	public String getInfoGraphe()
+	{
+		return this.graphes.toString();
+	}
+
+	public void ajouterNoeud()
+	{
+		this.graphes.ajouterNoeud();
+	}
+
+	public void supprimerNoeud()
+	{
+		this.graphes.supprimerNoeud();
+	}
+
+	public boolean ajouterArete(String idNoeudDepart, String idNoeudArrive, int val)
+	{
+		return this.graphes.ajouterArete(idNoeudDepart, idNoeudArrive, val);
+	}
+
+	public void supprimerArete(String id)
+	{
+		this.graphes.supprimerArete(id);
 	}
 
 	public static void main(String[] args)
