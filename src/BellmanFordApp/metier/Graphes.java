@@ -1,8 +1,9 @@
 package BellmanFordApp.metier;
 
-import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.Edge;
+import org.graphstream.graph.Graph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,14 @@ import org.graphstream.algorithm.Toolkit;
 
 public class Graphes
 {
-	private SingleGraph graphe;
+	private Graph graphe;
 
 	public Graphes()
 	{
-		this.genererGrapheAlea(4, 5, -2, 10);
+		this.genererGrapheAlea(6, 14, -2, 10);
 	}
 
-	public SingleGraph getGraphe() { return this.graphe; }
+	public Graph getGraphe() { return this.graphe; }
 	public int getNbNoeuds() {return this.graphe.getNodeCount(); }
 
 	public List<String> getLstArete()
@@ -49,7 +50,7 @@ public class Graphes
 		Node noeud1 = this.graphe.getNode(idNoeudDepart);
 		Node noeud2 = this.graphe.getNode(idNoeudArrive);
 
-		if (noeud1.hasEdgeBetween(noeud2) || noeud2.hasEdgeBetween(noeud1) || noeud1 == noeud2)
+		if (noeud1.hasEdgeBetween(noeud2))
 			return false;
 		else
 		{
@@ -70,7 +71,7 @@ public class Graphes
 
 	public void genererGrapheAlea(int nbSommet, int nbArete, int pMin, int pMax)
 	{
-		this.graphe = new SingleGraph("Graphe Aléatoire");
+		this.graphe = new MultiGraph("Graphe Aléatoire");
 
 		for(int i = 0 ; i < nbSommet ; i++)
 			this.graphe.addNode(""+i);
@@ -82,7 +83,7 @@ public class Graphes
 			do{
 				noeud1 = Toolkit.randomNode(this.graphe);
 				noeud2 = Toolkit.randomNode(this.graphe);
-			} while(noeud1.hasEdgeBetween(noeud2) || noeud2.hasEdgeBetween(noeud1) || noeud1 == noeud2);
+			} while(noeud1.hasEdgeBetween(noeud2));
 
 			Edge e = this.graphe.addEdge("(" + noeud1.getId() + "," + noeud2.getId() + ")",
 			              noeud1.getId(), noeud2.getId(), true);

@@ -2,7 +2,7 @@ package BellmanFordApp.controleur;
 
 import java.util.List;
 
-import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.graph.Graph;
 
 import BellmanFordApp.ihm.FrameGraphe;
 import BellmanFordApp.metier.Graphes;
@@ -24,7 +24,7 @@ public class Controleur
 		this.ihm.rechargerGraphe();
 	}
 
-	public SingleGraph getGraphe()
+	public Graph getGraphe()
 	{
 		return this.graphes.getGraphe();
 	}

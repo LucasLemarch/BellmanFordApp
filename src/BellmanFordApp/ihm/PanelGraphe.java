@@ -1,13 +1,10 @@
 package BellmanFordApp.ihm;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.BorderLayout;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.graph.Graph;
 import org.graphstream.ui.swingViewer.View;
 import org.graphstream.ui.swingViewer.Viewer;
 import org.graphstream.ui.swingViewer.Viewer.ThreadingModel;
@@ -23,7 +20,7 @@ public class PanelGraphe extends JPanel
 		this.ctrl = ctrl;
 		this.setLayout(new BorderLayout());
 
-		SingleGraph graphe = this.ctrl.getGraphe();
+		Graph graphe = this.ctrl.getGraphe();
 		Viewer viewer = new Viewer(graphe, ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
 

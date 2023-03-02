@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -30,8 +30,8 @@ public class PanelGeneration extends JPanel implements ActionListener
 		this.setLayout(new BorderLayout());
 
 		// Création des composants
-		JPanel panelCentre = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		panelCentre.setPreferredSize(new Dimension(260, this.getHeight()));
+		JPanel panelCentre = new JPanel(new GridLayout(5, 1));
+		JPanel panelBouton = new JPanel();
 
 		this.panelSommet = new PanelSectionEntier(ctrl, "Nombre de sommets");
 		this.panelArete  = new PanelSectionEntier(ctrl, "Nombre d'aretes"  );
@@ -48,8 +48,8 @@ public class PanelGeneration extends JPanel implements ActionListener
 		panelCentre.add(this.panelArete );
 		panelCentre.add(this.panelMin   );
 		panelCentre.add(this.panelMax   );
-		panelCentre.add(this.btnGenerer );
-	
+		panelCentre.add(     panelBouton);
+		panelBouton.add(this.btnGenerer );
 
 		// Activation des composants
 		this.btnGenerer.addActionListener(this);
