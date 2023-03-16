@@ -3,7 +3,6 @@ package BellmanFordApp.ihm;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
