@@ -40,9 +40,15 @@ public class Graphes
 		n.setAttribute("label",""+n.getId());
 	}
 
-	public void supprimerNoeud()
+	public boolean supprimerNoeud()
 	{
-		this.graphe.removeNode(this.graphe.getNodeCount() - 1);
+		try {
+			this.graphe.removeNode(this.graphe.getNodeCount() - 1);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	public boolean ajouterArete(String idNoeudDepart, String idNoeudArrive, int val)
@@ -50,7 +56,7 @@ public class Graphes
 		Node noeud1 = this.graphe.getNode(idNoeudDepart);
 		Node noeud2 = this.graphe.getNode(idNoeudArrive);
 
-		if (noeud1.hasEdgeBetween(noeud2))
+		if (noeud1.hasEdgeBetween(noeud2) || noeud2.hasEdgeBetween(noeud1) || noeud1 == noeud2)
 			return false;
 		else
 		{
@@ -64,9 +70,15 @@ public class Graphes
 		return true;
 	}
 
-	public void supprimerArete(String id)
+	public boolean supprimerArete(String id)
 	{
-		this.graphe.removeEdge(id);
+		try {
+			this.graphe.removeEdge(id);
+		} catch (Exception e) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public void genererGrapheAlea(int nbSommet, int nbArete, int pMin, int pMax)
@@ -83,7 +95,7 @@ public class Graphes
 			do{
 				noeud1 = Toolkit.randomNode(this.graphe);
 				noeud2 = Toolkit.randomNode(this.graphe);
-			} while(noeud1.hasEdgeBetween(noeud2));
+			} while(noeud1.hasEdgeBetween(noeud2) || noeud2.hasEdgeBetween(noeud1) || noeud1 == noeud2);
 
 			Edge e = this.graphe.addEdge("(" + noeud1.getId() + "," + noeud2.getId() + ")",
 			              noeud1.getId(), noeud2.getId(), true);
@@ -135,6 +147,29 @@ public class Graphes
 		this.afficherChemin(idNoeudDepart, idNoeudArrive);
 	}
 
+	private boolean verifierCycleNegatif()
+	{
+		for(Node n:this.graphe.getNodeSet()) 
+		{
+			if (n.hasAttribute("poids") && (int) (n.getAttribute("poids")) != Integer.MAX_VALUE)
+			{
+				for (Edge e : n.getEachLeavingEdge())
+				{
+					int pArrive = e.getTargetNode().getAttribute("poids");
+					int pDepart = n.getAttribute("poids");
+					int valeur  = e.getAttribute("valeur");
+
+					if (pArrive == Integer.MAX_VALUE || pArrive > pDepart + valeur)
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private void afficherChemin(int idNoeudDepart, int idNoeudArrive)
 	{
 		// Remettre toutes les aretes de la meme couleur
@@ -173,6 +208,12 @@ public class Graphes
 
 			sRet += n.getAttribute("pere") + "\n";
 		}
+
+		if(this.verifierCycleNegatif())
+			sRet += "Il y a un cycle negatif";
+		else
+			sRet += "Il n'y a pas de cycle negatif";
+
 
 		return sRet;
 	}

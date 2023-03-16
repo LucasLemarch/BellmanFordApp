@@ -41,6 +41,7 @@ public class Controleur
 	public void algorithmeBellmanFord(int idNoeudDepart, int idNoeudArrive)
 	{
 		this.graphes.algorithmeBellmanFord(idNoeudDepart, idNoeudArrive);
+		this.ihm.enleverInfos();
 	}
 
 	public String getInfoGraphe()
@@ -53,9 +54,12 @@ public class Controleur
 		this.graphes.ajouterNoeud();
 	}
 
-	public void supprimerNoeud()
+	public boolean supprimerNoeud()
 	{
-		this.graphes.supprimerNoeud();
+		if(this.graphes.supprimerNoeud()) return true;
+
+		this.ihm.afficherErreur("Impossible de supprimer le noeud");
+		return false;
 	}
 
 	public boolean ajouterArete(String idNoeudDepart, String idNoeudArrive, int val)
@@ -63,9 +67,22 @@ public class Controleur
 		return this.graphes.ajouterArete(idNoeudDepart, idNoeudArrive, val);
 	}
 
-	public void supprimerArete(String id)
+	public boolean supprimerArete(String id)
 	{
-		this.graphes.supprimerArete(id);
+		if (this.graphes.supprimerArete(id)) return true;
+
+		this.ihm.afficherErreur("Impossible de supprimer l'arete");
+		return false;
+	}
+
+	public void enleverInfos()
+	{
+		this.ihm.enleverInfos();
+	}
+
+	public void afficherErreur(String erreur)
+	{
+		this.ihm.afficherErreur(erreur);
 	}
 
 	public static void main(String[] args)

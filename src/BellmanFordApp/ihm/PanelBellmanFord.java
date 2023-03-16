@@ -83,6 +83,11 @@ public class PanelBellmanFord extends JPanel implements ActionListener
 		}
 	}
 
+	public void enleverInfos()
+	{
+		this.taInfo.setText("");
+	}
+
 	public void actionPerformed(ActionEvent e) 
 	{
 		this.ctrl.algorithmeBellmanFord(this.cbDepart.getSelectedIndex(), 

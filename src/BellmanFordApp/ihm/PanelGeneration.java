@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -67,7 +66,7 @@ public class PanelGeneration extends JPanel implements ActionListener
 
 			if (nbSommet < 2)
 			{
-				// afficher erreur
+				this.ctrl.afficherErreur("Le nombre de sommets doit être supérieur à 1");
 				this.panelSommet.setColor(Color.RED);
 				erreur = true;
 			}
@@ -76,7 +75,7 @@ public class PanelGeneration extends JPanel implements ActionListener
 		}
 		catch( NumberFormatException ex )
 		{
-			// afficher erreur
+			this.ctrl.afficherErreur("Le nombre de sommets doit être un entier");
 			this.panelSommet.setColor(Color.RED);
 			erreur = true;
 		}
@@ -88,13 +87,13 @@ public class PanelGeneration extends JPanel implements ActionListener
 
 			if (nbArete < 1)
 			{
-				// afficher erreur
+				this.ctrl.afficherErreur("Le nombre d'aretes doit être supérieur à 0");
 				this.panelArete.setColor(Color.RED);
 				erreur = true;
 			}
 			else if (nbArete > nbAreteMax)
 			{
-				// afficher erreur
+				this.ctrl.afficherErreur("Le nombre d'aretes doit être inférieur à " + nbAreteMax);
 				this.panelArete.setColor(Color.RED);
 				erreur = true;
 			}
@@ -103,7 +102,7 @@ public class PanelGeneration extends JPanel implements ActionListener
 		}
 		catch( NumberFormatException ex )
 		{
-			// afficher erreur
+			this.ctrl.afficherErreur("Le nombre d'aretes doit être un entier");
 			this.panelArete.setColor(Color.RED);
 			erreur = true;
 		}
@@ -115,7 +114,7 @@ public class PanelGeneration extends JPanel implements ActionListener
 		}
 		catch( NumberFormatException ex )
 		{
-			// afficher erreur
+			this.ctrl.afficherErreur("Le poids minimum doit être un entier");
 			this.panelMin.setColor(Color.RED);
 			erreur = true;
 		}
@@ -127,7 +126,7 @@ public class PanelGeneration extends JPanel implements ActionListener
 		}
 		catch( NumberFormatException ex )
 		{
-			// afficher erreur
+			this.ctrl.afficherErreur("Le poids maximum doit être un entier");
 			this.panelMax.setColor(Color.RED);
 			erreur = true;
 		}

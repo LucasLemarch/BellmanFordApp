@@ -144,11 +144,11 @@ public class PanelManipulation extends JPanel implements ActionListener
 
 				if (idDepart.equals(idArrive))
 				{
-					// afficher erreur
+					this.ctrl.afficherErreur("Impossible de créer une arête entre un noeud et lui-même !");
 				}
 				else if (!this.ctrl.ajouterArete(idDepart, idArrive, valeur))
 				{
-					// afficher erreur
+					this.ctrl.afficherErreur("Impossible de créer une arête entre deux noeuds déjà reliés !");
 				}
 				else
 				{
@@ -157,22 +157,29 @@ public class PanelManipulation extends JPanel implements ActionListener
 			}
 			catch( NumberFormatException ex )
 			{
-				// afficher erreur
+				this.ctrl.afficherErreur("La valeur de l'arête doit être un nombre !");
 			}
 		}
 
 		if (e.getSource() == this.btnDelNoeud)
 		{
-			this.ctrl.supprimerNoeud();
+			if (this.ctrl.supprimerNoeud())
+			{
+				this.cbDepart.removeItemAt(this.cbDepart.getItemCount() - 1);
+				this.cbArrive.removeItemAt(this.cbArrive.getItemCount() - 1);
 
-			this.cbDepart.removeItemAt(this.cbDepart.getItemCount() - 1);
-			this.cbArrive.removeItemAt(this.cbArrive.getItemCount() - 1);
+				this.cbArete.removeAllItems();
+				for (String arete : this.ctrl.getLstArete())
+					this.cbArete.addItem(arete);
+			}
 		}
 
 		if (e.getSource() == this.btnDelArete)
 		{
-			this.ctrl.supprimerArete("" + this.cbArete.getSelectedItem());
-			this.cbArete.removeItem(this.cbArete.getSelectedItem());
+			if (this.ctrl.supprimerArete("" + this.cbArete.getSelectedItem()))
+				this.cbArete.removeItem(this.cbArete.getSelectedItem());
 		}
+
+		this.ctrl.enleverInfos();
 	}
 }

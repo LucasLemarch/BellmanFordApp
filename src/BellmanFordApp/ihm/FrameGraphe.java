@@ -3,7 +3,9 @@ package BellmanFordApp.ihm;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import BellmanFordApp.controleur.Controleur;
@@ -23,6 +25,7 @@ public class FrameGraphe extends JFrame
 
 		this.setLayout(new BorderLayout());
 		this.setSize(1200, 800);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Création des composants
 		JPanel panelOption = new JPanel(new GridLayout(3, 1));
@@ -57,5 +60,15 @@ public class FrameGraphe extends JFrame
 		//maj panelBellmanFord
 		this.panelBellmanFord.ajusterListes();
 		this.panelManipulation.ajusterListes();
+	}
+
+	public void enleverInfos()
+	{
+		this.panelBellmanFord.enleverInfos();
+	}
+
+	public void afficherErreur(String erreur)
+	{
+		JOptionPane.showMessageDialog(this,erreur,"Erreur",JOptionPane.ERROR_MESSAGE);
 	}
 }
