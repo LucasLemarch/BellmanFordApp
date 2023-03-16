@@ -36,7 +36,7 @@ public class Graphes
 	{
 		Node n = this.graphe.addNode("" + this.graphe.getNodeCount());
 
-		n.setAttribute("ui.style","fill-color:red; text-size: 20;");
+		n.setAttribute("ui.style","fill-color:red; text-size: 20; text-color: red;");
 		n.setAttribute("label",""+n.getId());
 	}
 
