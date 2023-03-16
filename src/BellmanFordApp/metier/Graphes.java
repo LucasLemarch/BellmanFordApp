@@ -36,7 +36,7 @@ public class Graphes
 	{
 		Node n = this.graphe.addNode("" + this.graphe.getNodeCount());
 
-		n.setAttribute("ui.style","fill-color:red;");
+		n.setAttribute("ui.style","fill-color:red; text-size: 20;");
 		n.setAttribute("label",""+n.getId());
 	}
 
@@ -65,6 +65,7 @@ public class Graphes
 
 			e.setAttribute("label","" + val);
 			e.setAttribute("valeur", val);
+			e.setAttribute("ui.style", "size: 2px; text-size: 20;");
 		}
 
 		return true;
@@ -103,11 +104,12 @@ public class Graphes
 			int val = (int) (Math.random() * (pMax - pMin + 1) + pMin);
 			e.setAttribute("label","" + val);
 			e.setAttribute("valeur", val);
+			e.setAttribute("ui.style", "size: 2px; text-size: 20;");
 		}
 
 		for(Node n:this.graphe.getNodeSet()) 
 		{
-			n.setAttribute("ui.style","fill-color:red;");
+			n.setAttribute("ui.style","fill-color:red; text-size: 20; text-color: red;");
 			n.setAttribute("label",""+n.getId());
 		}
 	}
